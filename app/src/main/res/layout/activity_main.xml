@@ -23,7 +23,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/seekBar"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:max="300" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="0" />
 
         <TextView
             android:text="@string/metronome_off"
