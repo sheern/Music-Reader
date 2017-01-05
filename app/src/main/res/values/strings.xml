@@ -1,6 +1,12 @@
 <resources>
+    <!--MainActivity-->
     <string name="app_name">Music Reader</string>
     <string name="metronome_off">OFF</string>
     <string name="add_music">ADD MUSIC</string>
     <string name="empty_message">No music has been added yet</string>
+
+    <!--Dialog-->
+    <string name="dialog_title">Add a new sheet</string>
+    <string name="name_hint">Choose a name</string>
+    <string name="dialog_create">Create</string>
 </resources>

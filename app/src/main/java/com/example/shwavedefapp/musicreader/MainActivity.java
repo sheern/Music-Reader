@@ -1,7 +1,11 @@
 package com.example.shwavedefapp.musicreader;
 
+import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -9,12 +13,20 @@ public class MainActivity extends AppCompatActivity {
 
     SeekBar mMetronomeBar;
     TextView mDynamicBPM;
+    Button mAddMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         metronome();
+        mAddMusic = (Button) findViewById(R.id.add_music_button);
+        mAddMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogSetup();
+            }
+        });
     }
 
     public void metronome() {
@@ -51,5 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void dialogSetup() {
+        final AlertDialog addMusicDialog = new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.dialog_title))
+                .setView(R.layout.addsheet_dialog).create();
+        addMusicDialog.show();
     }
 }

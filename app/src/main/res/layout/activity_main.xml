@@ -12,16 +12,16 @@
     tools:context="com.example.shwavedefapp.musicreader.MainActivity"
     android:background="@color/colorPrimaryDark">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp"
-        android:paddingTop="12dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp">
 
         <SeekBar
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingTop="1dp"
             android:id="@+id/metronome_bar"
             android:layout_weight="1"
             android:max="300" />
@@ -29,19 +29,19 @@
         <TextView
             android:textColor="@color/offBPM"
             android:textStyle="bold"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="30dp"
             android:id="@+id/dynamic_bpm"
-            android:layout_weight="0" />
-
-    </LinearLayout>
+            android:layout_weight="0"
+            android:gravity="center" />
+    </TableRow>
 
     <Button
         android:text="@string/add_music"
         android:textColor="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:id="@+id/add_music_button"
         android:background="@color/colorAccent" />
 
     <ScrollView
@@ -61,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
