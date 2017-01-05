@@ -3,4 +3,5 @@
     <color name="colorPrimary">#20315b</color>
     <color name="colorPrimaryDark">#454545</color>
     <color name="colorAccent">#f88379</color>
+    <color name="offBPM">#656565</color>
 </resources>

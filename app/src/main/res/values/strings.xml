@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Music Reader</string>
-    <string name="metronome_off">BPM</string>
+    <string name="metronome_off">OFF</string>
     <string name="add_music">ADD MUSIC</string>
     <string name="empty_message">No music has been added yet</string>
 </resources>

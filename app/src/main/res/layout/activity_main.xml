@@ -22,27 +22,18 @@
         <SeekBar
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/seekBar"
+            android:id="@+id/metronome_bar"
             android:layout_weight="1"
             android:max="300" />
 
         <TextView
-            android:text="TextView"
+            android:textColor="@color/offBPM"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:id="@+id/dynamic_bpm"
             android:layout_weight="0" />
 
-        <TextView
-            android:text="@string/metronome_off"
-            android:textColor="@android:color/white"
-            android:alpha="0.25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:layout_weight="0"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp" />
     </LinearLayout>
 
     <Button
