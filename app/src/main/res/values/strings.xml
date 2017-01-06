@@ -7,6 +7,7 @@
 
     <!--Dialog-->
     <string name="dialog_title">Add a new sheet</string>
-    <string name="name_hint">Choose a name</string>
+    <string name="dialog_name">Name</string>
+    <string name="dialog_name_hint">Choose a name</string>
     <string name="dialog_create">Create</string>
 </resources>
