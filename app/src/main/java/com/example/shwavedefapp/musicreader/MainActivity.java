@@ -3,6 +3,7 @@ package com.example.shwavedefapp.musicreader;
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
+import android.graphics.pdf.PdfRenderer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
