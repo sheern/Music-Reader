@@ -1,16 +1,13 @@
 package com.example.shwavedefapp.musicreader;
 
-import android.graphics.Bitmap;
-import android.graphics.pdf.PdfRenderer;
-import android.os.ParcelFileDescriptor;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-/**
- * Created by shwav on 1/7/2017.
- */
+public class PDFActivity extends AppCompatActivity {
 
-public class PDFActivity {
-
-    PdfRenderer test;
-    Bitmap[] result;
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pdf);
+    }
 }
