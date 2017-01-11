@@ -1,30 +1,33 @@
 package com.example.shwavedefapp.musicreader;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
+import android.graphics.pdf.PdfRenderer.Page;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.widget.ImageView;
 
-import java.io.File;
 import java.io.IOException;
 
 public class PDFUtils {
 
-    protected Bitmap[] result;
-    private int numPages;
-
-    int getNumPages() {return this.numPages;}
-
-    void renderAllPages(Uri uri) {
+    void renderAllPages(PDFActivity display, Uri uri) {
         try {
-            ParcelFileDescriptor fileLocation = ParcelFileDescriptor
-                    .open(new File(uri.getPath()), ParcelFileDescriptor.MODE_READ_ONLY);
+            ParcelFileDescriptor fileLocation = display.getContentResolver()
+                    .openFileDescriptor(uri, "r");
             PdfRenderer renderer = new PdfRenderer(fileLocation);
-            numPages = renderer.getPageCount();
-            result = new Bitmap[numPages];
+            int numPages = renderer.getPageCount();
             for(int i = 0; i < numPages; i++) {
-                renderer.openPage(i)
-                        .render(result[i], null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+                Bitmap result = Bitmap.createBitmap(Resources.getSystem().getDisplayMetrics().widthPixels,
+                        Resources.getSystem().getDisplayMetrics().heightPixels,
+                        Bitmap.Config.ARGB_4444);
+                Page page = renderer.openPage(i);
+                page.render(result, null, null, Page.RENDER_MODE_FOR_DISPLAY);
+                ImageView newPage = new ImageView(display);
+                newPage.setImageBitmap(result);
+                display.container.addView(newPage);
+                page.close();
             }
             renderer.close();
         } catch(IOException e) {

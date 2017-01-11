@@ -2,7 +2,6 @@ package com.example.shwavedefapp.musicreader;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button mAddMusic;
     TextView mNoMusicHint;
     LinearLayout mListSheets;
-
-    Uri fileUri;
+    MusicDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +35,18 @@ public class MainActivity extends AppCompatActivity {
         mAddMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MusicDialog dialog = new MusicDialog(MainActivity.this);
-                dialog.dialogSetup(mListSheets, mNoMusicHint);
+                dialog = new MusicDialog(MainActivity.this);
+                dialog.dialogSetup();
             }
         });
     }
 
-    // TODO (2) -- HANDLE THIS IN MUSIC DIALOG
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == MusicDialog.READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
-                fileUri = data.getData();
+                dialog.fileUri = data.getData();
+                dialog.browseFile.setText(dialog.fileUri.getPath());
             }
         }
     }
