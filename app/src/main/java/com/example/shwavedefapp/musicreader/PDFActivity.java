@@ -1,31 +1,120 @@
 package com.example.shwavedefapp.musicreader;
 
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ScrollView;
 
 public class PDFActivity extends AppCompatActivity {
 
     LinearLayout container;
     Uri uri;
+    ScrollView scrollView;
+    Button forward;
+    Button auto;
+    Button backward;
+
+    private int currentY;
+    private boolean scrollMode;
+    private int speed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf);
-        uri = getIntent().getParcelableExtra(MusicDialog.EXTRA_URI);
+        uri = getIntent().getParcelableExtra(DialogAdapter.EXTRA_URI);
+
         container = (LinearLayout) findViewById(R.id.bitmap_container);
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        forward = (Button) findViewById(R.id.forward_scroll);
+        auto = (Button) findViewById(R.id.auto_scroll);
+        backward = (Button) findViewById(R.id.backward_scroll);
         PDFUtils renderer = new PDFUtils();
-        TextView test = new TextView(this);
-        test.setText(uri.getPath());
-        container.addView(test);
         renderer.renderAllPages(this, uri);
-//        for(int i = 0; i < renderer.getNumPages(); i++) {
-//            ImageView page = new ImageView(this);
-//            page.setImageBitmap(renderer.result[i]);
-//            container.addView(page);
-//        }
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(scrollMode) {
+                    if(speed > 0) {
+                        speed -= 10;
+                        reset(speed);
+                    }
+                } else {
+                    currentY += scrollView.getHeight() - 15;
+                    if(currentY > container.getHeight() - scrollView.getHeight())
+                        currentY = container.getHeight() - scrollView.getHeight();
+                    scrollView.smoothScrollTo(0, currentY);
+                }
+            }
+        });
+        auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scrollMode = !scrollMode;
+                if(scrollMode) {
+                    speed = 100;
+                    recursion(speed);
+                }
+            }
+        });
+        backward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(scrollMode) {
+                    speed += 10;
+                    reset(speed);
+                } else {
+                    currentY -= scrollView.getHeight() - 15;
+                    if (currentY < 0)
+                        currentY = 0;
+                    scrollView.smoothScrollTo(0, currentY);
+                }
+            }
+        });
+    }
+
+    void recursion(final int setSpeed) {
+        if(currentY < container.getHeight() && scrollMode) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    currentY++;
+                    scrollView.scrollTo(0, currentY);
+                    recursion(setSpeed);
+                }
+            }, setSpeed);
+        }
+    }
+
+    void reset(final int setSpeed) {
+        scrollMode = false;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollMode = true;
+                recursion(setSpeed);
+            }
+        }, setSpeed + 5);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 }

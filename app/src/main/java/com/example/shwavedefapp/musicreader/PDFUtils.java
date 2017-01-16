@@ -1,5 +1,7 @@
 package com.example.shwavedefapp.musicreader;
 
+import android.app.IntentService;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
@@ -12,6 +14,9 @@ import java.io.IOException;
 
 public class PDFUtils {
 
+    private double ratio;
+    static final int landscapeWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+
     void renderAllPages(PDFActivity display, Uri uri) {
         try {
             ParcelFileDescriptor fileLocation = display.getContentResolver()
@@ -19,10 +24,10 @@ public class PDFUtils {
             PdfRenderer renderer = new PdfRenderer(fileLocation);
             int numPages = renderer.getPageCount();
             for(int i = 0; i < numPages; i++) {
-                Bitmap result = Bitmap.createBitmap(Resources.getSystem().getDisplayMetrics().widthPixels,
-                        Resources.getSystem().getDisplayMetrics().heightPixels,
-                        Bitmap.Config.ARGB_4444);
                 Page page = renderer.openPage(i);
+                ratio = ((double)page.getHeight()) / page.getWidth();
+                Bitmap result = Bitmap.createBitmap(landscapeWidth, (int)(landscapeWidth*ratio),
+                        Bitmap.Config.ARGB_4444);
                 page.render(result, null, null, Page.RENDER_MODE_FOR_DISPLAY);
                 ImageView newPage = new ImageView(display);
                 newPage.setImageBitmap(result);
@@ -32,6 +37,16 @@ public class PDFUtils {
             renderer.close();
         } catch(IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public class RenderService extends IntentService {
+
+        public RenderService() {super("RenderService");}
+
+        @Override
+        protected void onHandleIntent(Intent intent) {
+
         }
     }
 }

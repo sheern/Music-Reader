@@ -4,10 +4,6 @@ import android.content.Context;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-/**
- * Created by Shwave DeFapp on 1/9/2017.
- */
-
 public class Metronome {
 
     public void create(final Context c, SeekBar bar, final TextView bpm) {
@@ -36,6 +32,7 @@ public class Metronome {
                 if(progress > 0) {
                     bpm.setTextColor(c.getResources().getColor(R.color.colorAccent));
                     bpm.setText("" + progress);
+                    play(progress);
                 } else {
                     bpm.setText(c.getResources().getString(R.string.metronome_off));
                     bpm.setTextColor(c.getResources().getColor(R.color.offBPM));
@@ -43,5 +40,9 @@ public class Metronome {
             }
         });
     }
+
+    private void play(int bpm) {}
+
+    private void stop() {}
 
 }

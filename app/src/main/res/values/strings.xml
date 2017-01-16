@@ -1,9 +1,9 @@
 <resources>
     <!--MainActivity-->
-    <string name="app_name">Music Reader</string>
+    <string name="app_name">SheetRead</string>
     <string name="metronome_off">OFF</string>
-    <string name="add_music">ADD MUSIC</string>
-    <string name="empty_message">No music has been added yet</string>
+    <string name="add_music">add music</string>
+    <string name="empty_message">No music has been saved yet</string>
 
     <!--Dialog-->
     <string name="dialog_title">Add a new sheet</string>

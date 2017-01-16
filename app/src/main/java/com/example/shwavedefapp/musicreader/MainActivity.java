@@ -17,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
     Button mAddMusic;
     TextView mNoMusicHint;
     LinearLayout mListSheets;
-    MusicDialog dialog;
+    DialogAdapter dialog;
 
+    // TODO 1 -- savedbuttons disappear on screen rotate, work on saved instance state
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mAddMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = new MusicDialog(MainActivity.this);
+                dialog = new DialogAdapter(MainActivity.this);
                 dialog.dialogSetup();
             }
         });
@@ -43,10 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == MusicDialog.READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if(requestCode == DialogAdapter.READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
                 dialog.fileUri = data.getData();
-                dialog.browseFile.setText(dialog.fileUri.getPath());
             }
         }
     }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#20315b</color>
-    <color name="colorPrimaryDark">#454545</color>
-    <color name="colorAccent">#f88379</color>
+    <color name="colorPrimary">#f44336</color>
+    <color name="colorPrimaryDark">#d32f2f</color>
+    <color name="colorAccent">#d4e157</color>
     <color name="offBPM">#656565</color>
+    <color name="background">#303030</color>
+    <color name="buttonText">#dddddd</color>
 </resources>

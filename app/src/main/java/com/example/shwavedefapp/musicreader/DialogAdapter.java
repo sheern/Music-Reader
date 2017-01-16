@@ -2,30 +2,29 @@ package com.example.shwavedefapp.musicreader;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 import android.widget.Toast;
 
-class MusicDialog extends AlertDialog {
+class DialogAdapter {
 
     private MainActivity m;
-    private static final LayoutParams margins = new LayoutParams
-            (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    Uri fileUri;
+    private Button browseFile;
+    private EditText saveName;
 
-    MusicDialog(MainActivity call) {
-        super(call);
-        m = call;
-    }
+    static final int READ_REQUEST_CODE = 1;
+    static final String EXTRA_URI = "com.example.shwavedefapp.musicreader.FILEURI";
 
-    public static final int READ_REQUEST_CODE = 1;
-    public static final String EXTRA_URI = "com.example.shwavedefapp.musicreader.FILEURI";
+    DialogAdapter(MainActivity call) {m = call;}
 
-    void dialogSetup(final LinearLayout l, final TextView t) {
+    void dialogSetup() {
         final AlertDialog dialog = new AlertDialog.Builder(m)
                 .setTitle(m.getString(R.string.dialog_title))
                 .setView(R.layout.addsheet_dialog)
@@ -33,7 +32,7 @@ class MusicDialog extends AlertDialog {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                onDialogCreateNewSheet(l, t);
+                                onDialogCreateNewSheet();
                             }
                         })
                 .setNegativeButton(m.getString(R.string.dialog_cancel),
@@ -43,7 +42,8 @@ class MusicDialog extends AlertDialog {
                         }).create();
         dialog.show();
 
-        Button browseFile = (Button) dialog.findViewById(R.id.dialog_browse);
+        saveName = (EditText) dialog.findViewById(R.id.save_name);
+        browseFile = (Button) dialog.findViewById(R.id.dialog_browse);
         browseFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,27 +52,28 @@ class MusicDialog extends AlertDialog {
         });
     }
 
-    // TODO (1) -- CREATE SEPARATE CLASS FOR SPECIAL BUTTON
-    private void onDialogCreateNewSheet(LinearLayout l, TextView t) {
-        if(m.fileUri == null) {
+    private void onDialogCreateNewSheet() {
+        if(fileUri == null) {
             Toast.makeText(m, "No file selected", Toast.LENGTH_SHORT).show();
         } else {
             Intent newPdf = new Intent(m, PDFActivity.class);
-            newPdf.putExtra(EXTRA_URI, m.fileUri);
+            newPdf.putExtra(EXTRA_URI, fileUri);
             m.startActivity(newPdf);
-            Button newSheet = new Button(m);
-            newSheet.setBackgroundColor(m.getResources().getColor(R.color.colorPrimary));
-            margins.setMargins(0, 0, 0, 16);
-            newSheet.setLayoutParams(margins);
-            l.addView(newSheet);
-            if (l.getChildCount() == 2) t.setVisibility(View.GONE);
+            if(! saveName.getText().toString().equals("")) {
+                Button newSheet = SavedButtonAdapter.getButton(m, saveName.getText().toString());
+                m.mListSheets.addView(newSheet);
+                if (m.mListSheets.getChildCount() == 2)
+                    m.mNoMusicHint.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(m, "Sheet will not be saved", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     private void onDialogBrowse() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/pdf");
-        m.startActivityForResult(intent, READ_REQUEST_CODE);
+        Intent open = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        open.addCategory(Intent.CATEGORY_OPENABLE);
+        open.setType("application/pdf");
+        m.startActivityForResult(open, READ_REQUEST_CODE);
     }
 }
