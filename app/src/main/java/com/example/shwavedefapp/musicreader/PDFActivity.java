@@ -18,9 +18,10 @@ public class PDFActivity extends AppCompatActivity {
     Button auto;
     Button backward;
 
+    // TODO 1 -- Once currentY hits ~8192, takes a dump
     private int currentY;
     private boolean scrollMode;
-    private int speed;
+    private int speed = 80;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,12 @@ public class PDFActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(scrollMode) {
-                    if(speed > 0) {
-                        speed -= 10;
-                        reset(speed);
-                    }
+                    speed -= 15;
+                    if(speed < 5)
+                        speed = 5;
+                    reset(speed);
                 } else {
-                    currentY += scrollView.getHeight() - 15;
+                    currentY += scrollView.getHeight() - 30;
                     if(currentY > container.getHeight() - scrollView.getHeight())
                         currentY = container.getHeight() - scrollView.getHeight();
                     scrollView.smoothScrollTo(0, currentY);
@@ -57,7 +58,6 @@ public class PDFActivity extends AppCompatActivity {
             public void onClick(View view) {
                 scrollMode = !scrollMode;
                 if(scrollMode) {
-                    speed = 100;
                     recursion(speed);
                 }
             }
@@ -66,10 +66,14 @@ public class PDFActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(scrollMode) {
-                    speed += 10;
-                    reset(speed);
+                    if(speed <= 95) {
+                        speed += 10;
+                        reset(speed);
+                    }
+                    else
+                        speed = 95;
                 } else {
-                    currentY -= scrollView.getHeight() - 15;
+                    currentY -= scrollView.getHeight() - 30;
                     if (currentY < 0)
                         currentY = 0;
                     scrollView.smoothScrollTo(0, currentY);

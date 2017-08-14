@@ -13,27 +13,27 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="32dp"
         android:paddingBottom="24dp"
+        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingTop="32dp">
 
         <SeekBar
+            android:id="@+id/metronome_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="1dp"
-            android:id="@+id/metronome_bar"
             android:layout_weight="1"
-            android:max="300" />
+            android:max="300"
+            android:paddingTop="1dp" />
 
         <TextView
-            android:textColor="@color/offBPM"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_width="30dp"
             android:id="@+id/dynamic_bpm"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@color/offBPM"
+            android:textStyle="bold" />
     </TableRow>
 
     <Button

@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:layout_gravity="start"
             android:id="@+id/backward_scroll"
-            android:background="@android:color/transparent" />
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
         <Button
             android:layout_width="0dp"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:id="@+id/auto_scroll"
-            android:background="@android:color/transparent" />
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
         <Button
             android:layout_width="0dp"
@@ -47,7 +47,8 @@
             android:layout_weight="1"
             android:layout_gravity="end"
             android:id="@+id/forward_scroll"
-            android:background="@android:color/transparent" />
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
     </TableRow>
 
 </FrameLayout>
